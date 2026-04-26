@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف يحيى & خالدية الساحرة</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playball&family=Great+Vibes&family=Amiri:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --rose-gold: #050b83;
+            /* اللون الأزرق الملكي المعتمد */
+            --ivory: #fcfaf2;
+            --ivory-dark: #f0e6cd;
+            --lace-white: #ffffff;
+            --text-main: #5d4a41;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--ivory);
+            overflow-x: hidden; /* تم التعديل لمنع الاهتزاز العرضي */
+            color: var(--text-main);
+        }
+
+        /* --- ستائر الافتتاحية --- */
+        #dreamy-curtain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            cursor: pointer;
+            transition: visibility 2.5s;
+        }
+
+        .curtain-half.left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background-color: var(--ivory-dark);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
+            border-right: 1px solid var(--rose-gold);
+            transition: transform 2.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .curtain-half.right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-color: var(--ivory-dark);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
+            border-left: 1px solid var(--rose-gold);
+            transition: transform 2.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .curtain-half::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background-image: url('https://www.transparentpng.com/download/wedding-frame/L8V9Y4-wedding-frame-lace-png.png');
+            background-size: contain;
+            background-repeat: repeat-y;
+            opacity: 0.1;
+        }
+
+        .curtain-half.left::after {
+            right: 5px;
+        }
+
+        .curtain-half.right::after {
+            left: 5px;
+            transform: scaleX(-1);
+        }
+
+        #script-monogram {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            transition: all 1.5s ease;
+            text-align: center;
+            width: 100%;
+        }
+
+        #script-monogram-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5rem; /* تم تصغيره قليلاً ليتناسب مع الجملة الجديدة */
+            color: var(--rose-gold);
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+            animation: monogramFloat 4s ease-in-out infinite;
+            line-height: 1.2;
+        }
+
+        .curtains-open .curtain-half.left {
+            transform: translateX(-100%);
+        }
+
+        .curtains-open .curtain-half.right {
+            transform: translateX(100%);
+        }
+
+        .curtains-open #script-monogram {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.6);
+        }
+
+        .curtains-open {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* --- المحتوى الرئيسي --- */
+        #main-content-wrapper {
+            opacity: 0;
+            transition: opacity 1.5s ease 2.5s;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 15px; /* تم تقليل الـ padding ليناسب الموبايل */
+            background-color: var(--ivory);
+            background-image: url('https://www.transparenttextures.com/patterns/shattered-island.png');
+        }
+
+        .card-content {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border: 2px solid var(--rose-gold);
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 0 50px rgba(5, 11, 131, 0.1);
+            position: relative;
+            z-index: 5;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-sizing: border-box;
+        }
+
+        .quran-verse {
+            font-size: 1.2rem;
+            color: var(--rose-gold);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        /* التعديل الجوهري لأسماء الآباء */
+        .parents-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin: 20px 0;
+            gap: 10px;
+            flex-wrap: nowrap; /* يضمن بقائهم بجانب بعض */
+        }
+
+        .parent-box {
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .parent-title {
+            display: block;
+            font-weight: bold;
+            color: var(--rose-gold);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .parent-name {
+            display: block;
+            font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            white-space: normal; /* يسمح بنزول الاسم لسطر ثاني إذا كان طويلاً جداً في الموبايل */
+        }
+
+        .names-section {
+            margin: 20px 0;
+        }
+
+        .name {
+            font-family: 'Amiri', serif;
+            font-size: 3.8rem;
+            color: var(--text-main);
+            display: block;
+            margin: 5px 0;
+        }
+
+        .and-sign {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--rose-gold);
+        }
+
+        .details-section {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            border-top: 1px solid var(--ivory-dark);
+            padding-top: 20px;
+        }
+
+        .highlight {
+            color: var(--rose-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .location-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: var(--rose-gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.4s;
+        }
+
+        @keyframes monogramFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* تعديلات شاشة الموبايل */
+        @media (max-width: 600px) {
+            .parents-section {
+                flex-direction: row; /* التأكيد على بقائهم جنباً إلى جنب */
+                gap: 5px;
+            }
+
+            .name { font-size: 3rem; }
+            .parent-name { font-size: 0.95rem; }
+            .parent-title { font-size: 1rem; }
+            #script-monogram-text { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="dreamy-curtain-container" onclick="openDreamyCurtains()">
+        <div class="curtain-half left"></div>
+        <div id="script-monogram">
+            <div id="script-monogram-text">Y&K <br> <span style="font-family: 'Amiri', serif;
+font-style: italic; font-size: 2.1rem;">عمر واحد واخترته معك</span>
+<br> <span>23.5.2026</span></div>
+        </div>
+        <div class="curtain-half right"></div>
+    </div>
+
+    <div id="main-content-wrapper">
+        <div class="main-container">
+            <div class="card-content">
+                <div class="quran-verse">
+                    ﷽ <br>
+                    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ
+                    بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+                </div>
+
+                <div style="font-size: 1.1rem; font-weight:bold; color: #777; margin-bottom: 10px;">بقلوب ملؤها الحب يتشرف كل من </div>
+
+                <div class="parents-section">
+                    <div class="parent-box">
+                        <span class="parent-title">والد العريس</span>
+                        <span class="parent-name">علاء يحيى الكسواني</span>
+                    </div>
+                    <div class="parent-box">
+                        <span class="parent-title">والد العروس</span>
+                        <span class="parent-name">أحمد جميل البشتاوي</span>
+                    </div>
+                </div>
+
+                <div style="font-size: 1.1rem; font-weight:bold; color: #777; margin-bottom: 10px; margin-top: 15px;">لحضور حفل فلذة كبديهما </div>
+                
+                <div class="names-section">
+                    <span class="name">يحيى</span>
+                    <span class="and-sign">&</span>
+                    <span class="name">خالدية</span>
+                </div>
+
+                <div class="details-section">
+                    بمشيئة الله تعالى، ستقام مراسم الفرح <br>
+                    في قاعات <span class="highlight">قصر تريو - القاعة رقم 2</span>
+                    <br>
+                    تُضاء الأنوار ببهجة حضوركم من الساعة <br>
+                    <span class="highlight">8:30 مساءً وحتى 11:30 منتصف الليل</span>
+                    <br>
+                    وذلك يوم <span class="highlight">السبت الموافق 23 مايو 2026</span>
+                </div>
+
+                <p style="margin-top: 30px; font-style: italic; color: #888;">
+                    "تكتمل سعادتنا ويُزهر فرحنا بجمال تشريفكم"
+                </p>
+
+                <a href=" https://maps.app.goo.gl/S9nVurfEHhyEyHqN8?g_st=iw" target="_blank" class="location-btn">📍 موقع قاعة قصر تريو</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openDreamyCurtains() {
+            const container = document.getElementById('dreamy-curtain-container');
+            container.classList.add('curtains-open');
+            const contentWrapper = document.getElementById('main-content-wrapper');
+            contentWrapper.style.opacity = '1';
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+            }, 2500);
+        }
+    </script>
+</body>
+
+</html>
